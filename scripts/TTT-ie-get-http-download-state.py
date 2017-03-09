@@ -11,7 +11,18 @@ def pykdLog(log):
     print(log)
     pykdLog2File(log, LOG_FILE)
 
-pykd.dbgCommand(r'bc *;g-;bp ieframe!CDownloadWindowItem::_SetState;bp ieframe!CNotificationBar2::SetFormattedText')
+pykd.dbgCommand(r'bc *;g-')
+pykd.dbgCommand(r'!idna.tt 54C1D40000025')
+pykd.dbgCommand(r'bp ieframe!CDownloadSecurity::_SendSecurityErrorMessage')
+pykd.dbgCommand(r'bp wininet!CommitUrlCacheEntryW')
+pykd.dbgCommand(r'bp ieframe!CDownloadWindowItem::_SetState')
+pykd.dbgCommand(r'bp ieframe!CNotificationBar2::SetFormattedText')
+pykd.dbgCommand(r'bp wininet!CCacheServerContainer::AddUrl')
+pykd.dbgCommand(r'bp wininet!CCacheClientContainer::AddUrl')
+pykd.dbgCommand(r'bp rpcrt4!NdrClientCall3')
+pykd.dbgCommand(r'bp rpcrt4!NdrpClientCall3')
+
+
 ret = pykd.dbgCommand(r'bl')
 pykdLog(ret)
 
@@ -22,6 +33,8 @@ while True:
         break
     ret = pykd.dbgCommand(r'kP')
     pykdLog2File(ret, LOG_FILE)
+    if 'ieframe!CDownloadSecurity::_SendSecurityErrorMessage' in ret:
+        break
     for line in ret.split('\n'):
         if 'eState = DLState' in line \
             or 'wchar_t * pwzOriginDownloadUrl = ' in line \
