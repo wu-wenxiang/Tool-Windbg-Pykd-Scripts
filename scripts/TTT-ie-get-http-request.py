@@ -25,7 +25,8 @@ while True:
     for line in ret.split('\n'):
         if 'eState = DLState' in line \
             or 'wchar_t * pwzOriginDownloadUrl = ' in line \
-            or 'wchar_t * pwzDestinationFilePath = ' in line:
+            or 'wchar_t * pwzDestinationFilePath = ' in line \
+            or 'wchar_t * psz' in line:
             print(line)
     LOG_FILE.flush()
 
