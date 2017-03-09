@@ -21,7 +21,7 @@ while True:
         pykdLog(ret)
         break
     ret = pykd.dbgCommand(r'kP')
-    pykdLog2File(ret)
+    pykdLog2File(ret, LOG_FILE)
     for line in ret.split('\n'):
         if 'eState = DLState' in line \
             or 'wchar_t * pwzOriginDownloadUrl = ' in line \
