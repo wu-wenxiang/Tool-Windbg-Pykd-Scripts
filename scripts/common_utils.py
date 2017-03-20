@@ -26,7 +26,8 @@ def runCmd(cmd, cmdVerbose=True, retVerbose=True):
     return ret
 
 def ttt_test2end(content):
-    if 'TTT Replay: End of trace reached.' in content:
+    if 'TTT Replay: End of trace reached.' in content \
+       or 'TTT Replay: Start of trace reached.' in content:
         return True
     return False
 
