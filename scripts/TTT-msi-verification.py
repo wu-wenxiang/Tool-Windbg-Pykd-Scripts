@@ -6,6 +6,7 @@ import pykd
 import re
 from common_utils import *
 
+print('='*10 + ' Start ' + '='*10)
 #runCmd(r'bc *;g-', False, False)
 runCmd(r'bc *;g', False, False)
 
@@ -16,7 +17,9 @@ runCmd(r'bp clr!StrongNameSignatureVerification', False, False)
 runCmd(r'bp clr!UnloadAssembly', False, False)
 runCmd(r'bp msi!CMsiExecute::Rollback', False, False)
 runCmd(r'bp clr!CAssemblyCacheItem::LegacyCommit', False, False)
-runCmd(r'bp clr!StrongNameIsValidPublicKey', False, False)
+#runCmd(r'bp clr!StrongNameIsValidPublicKey', False, False)
+runCmd(r'bp 000007fe`ec9b2068', False, False)
+runCmd(r'bp 000007fe`ec722b50', False, False)
 '''
 x kernel32!*Reg*ValueExW
 '''
