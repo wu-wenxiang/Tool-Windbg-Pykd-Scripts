@@ -1,5 +1,5 @@
 '''
-Version: 0.0.1
+Version: 0.0.2
 '''
 
 import pykd
@@ -18,12 +18,14 @@ def pyLog(log):
 def runCmd(cmd, cmdVerbose=True, retVerbose=True):
     cmdLog = pyLog if cmdVerbose else pyLog2File
     retLog = pyLog if retVerbose else pyLog2File
-    
     cmdLog('\n> %s\n%s' % (cmd, '-'*20))
     ret = pykd.dbgCommand(cmd)
     retLog(ret)
-
     return ret
+
+def runCmdGetArgs(cmdStr, reObj):
+    ret = runCmd(cmdStr, False, False)
+    return [reObj.search(line)for line in ret.split('\n') if reObj.search(line)]
 
 def ttt_test2end(content):
     if 'TTT Replay: End of trace reached.' in content \
