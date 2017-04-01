@@ -7,7 +7,7 @@ import re
 from common_utils import *
 
 print('='*10 + ' Start ' + '='*10)
-runCmd(r'bc *;g-')
+runCmd(r'bc *;g')
 
 #runCmd(r'!idna.tt 4AF680000013') # Abnormal: before wininet!WriteProxySettings
 
@@ -28,7 +28,7 @@ x kernel32!*Reg*ValueExW
 runCmdLog(r'bl', False)
 
 while True:
-    ret = runCmd(r'g')
+    ret = runCmd(r'g-')
     if ttt_test2end(ret):
         pyLog('='*10 + ' End ' + '='*10)
         break

@@ -7,7 +7,7 @@ import re
 from common_utils import *
 
 print('='*10 + ' Start ' + '='*10)
-runCmd(r'bc *;g')
+runCmd(r'bc *;g;g-')
 
 #runCmd(r'!idna.tt 4159E80000018') # Abnormal:ieframe!CDownloadWindowItem::_SetState
 #runCmd(r'!idna.tt 54BF700000644') # Abnormal:wininet!CommitUrlCacheEntryW
@@ -18,6 +18,10 @@ runCmd(r'bp ieframe!CNotificationBar2::SetFormattedText')
 runCmd(r'bp wininet!CommitUrlCacheEntryW')
 runCmd(r'bp wininet!CCacheServerContainer::AddUrl')
 runCmd(r'bp wininet!CCacheClientContainer::AddUrl')
+runCmd(r'bp rpcrt4!LRPC_BASE_CCALL::SendReceive')
+
+runCmd(r'bp ntdll!ZwAlpcSendWaitReceivePort')
+
 #runCmd(r'bp rpcrt4!NdrClientCall3')        # Detail
 #runCmd(r'bp rpcrt4!NdrpClientCall3')       # Detail
 #runCmd(r'bp rpcrt4!Ndr64pClientUnMarshal') # Detail
@@ -26,7 +30,7 @@ runCmd(r'bp wininet!CCacheClientContainer::AddUrl')
 runCmdLog(r'bl', False)
 
 while True:
-    ret = runCmd(r'g-')
+    ret = runCmd(r'g')
     if ttt_test2end(ret):
         pyLog('='*10 + ' End ' + '='*10)
         break
@@ -43,9 +47,15 @@ while True:
             or 'wchar_t * pwzOriginDownloadUrl = ' in line \
             or 'wchar_t * pwzDestinationFilePath = ' in line \
             or 'wchar_t * psz' in line:
-            print(line)
+            pyLog(line)
     #if 'ieframe!CDownloadSecurity::_SendSecurityErrorMessage' in ret:
     #    break
+
+    ret = runCmd(r'!mex.t')
+    for line in ret.split('\n'):
+        if 'webcache_' in line:
+            pyLog(line)
+    
     LOG_FILE.flush()
 
 LOG_FILE.close()
