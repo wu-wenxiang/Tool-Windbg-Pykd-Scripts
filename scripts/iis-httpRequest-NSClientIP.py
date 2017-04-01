@@ -1,5 +1,5 @@
 '''
-Utils: 0.0.2
+Utils: 0.0.3
 '''
 
 import pykd
@@ -37,7 +37,7 @@ for item in ret:
         continue
     for header in ret:
         headerID = header.groups()[0]
-        tmpRet = runCmd(r'!mex.DisplayObj %s' % headerID, False, False)
+        tmpRet = runCmd(r'!mex.DisplayObj %s' % headerID)
         if "NS-Client-IP" in tmpRet:
             for line in tmpRet.split('\n'):
                 if reIpAddr.search(line):

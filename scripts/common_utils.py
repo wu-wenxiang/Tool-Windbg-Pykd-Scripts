@@ -1,5 +1,5 @@
 '''
-Version: 0.0.2
+Version: 0.0.3
 '''
 
 import pykd
@@ -15,7 +15,10 @@ def pyLog(log):
     print(log)
     pyLog2File(log, LOG_FILE)
 
-def runCmd(cmd, cmdVerbose=True, retVerbose=True):
+def runCmd(cmd):
+    return runCmdLog(cmd, False, False)
+
+def runCmdLog(cmd, cmdVerbose=True, retVerbose=True):
     cmdLog = pyLog if cmdVerbose else pyLog2File
     retLog = pyLog if retVerbose else pyLog2File
     cmdLog('\n> %s\n%s' % (cmd, '-'*20))
@@ -23,8 +26,8 @@ def runCmd(cmd, cmdVerbose=True, retVerbose=True):
     retLog(ret)
     return ret
 
-def runCmdGetArgs(cmdStr, reObj):
-    ret = runCmd(cmdStr, False, False)
+def runCmdGetArgs(cmd, reObj):
+    ret = runCmd(cmd)
     return [reObj.search(line)for line in ret.split('\n') if reObj.search(line)]
 
 def ttt_test2end(content):
