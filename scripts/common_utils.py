@@ -1,11 +1,15 @@
 '''
-Version: 0.0.3
+Version: 0.0.4
 '''
 
 import pykd
 import re
 
 LOG_FILE = open(r'C:\local\tmp\debugLog.txt', 'w')
+
+def initLog(filePath):
+    global LOG_FILE
+    LOG_FILE = open(filePath, 'w')
 
 def pyLog2File(logObj, fileObj=LOG_FILE):
     for line in str(logObj).split('\n'):
