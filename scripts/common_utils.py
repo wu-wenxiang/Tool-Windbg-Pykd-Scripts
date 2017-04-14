@@ -1,5 +1,5 @@
 '''
-Version: 0.1.0
+Version: 0.1.1
 '''
 
 import pykd
@@ -22,6 +22,9 @@ class PyLog:
     def log(self, logObj):
         self.log2Scr(logObj)
         self.log2File(logObj)
+
+    def flush(self):
+        self._logFile.flush()
 
     def close(self):
         self._logFile.close()

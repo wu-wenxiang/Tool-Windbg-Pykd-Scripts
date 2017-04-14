@@ -1,38 +1,35 @@
 '''
-Utils: 0.0.4
+Utils: 0.1.1
 '''
 
 import pykd
 import re
 from common_utils import *
+    
+pyLog = PyLog(r'C:\local\tmp\TTT-taskhost-get-addUrl.txt')
+util = Util(pyLog)
+pyLog.log2Scr('='*10 + ' Start ' + '='*10)
+util.runCmd(r'bc *;g;g-')
 
-initLog(r'C:\local\tmp\TTT-taskhost-get-addUrl.txt')
+#util.runCmd(r'bp rpcrt4!Invoke')
+#util.runCmd(r'bp wininet!s_UrlCacheAddUrl')
+util.runCmd(r'bp wininet!CCacheContainer::AddUrl')
+util.runCmd(r'bp wininet!WxVerifySameDirectory')
+#util.runCmd(r'bp esent!ErrorIOMgrIssueIO')
 
-print('='*10 + ' Start ' + '='*10)
-
-runCmd(r'bc *;g;g-')
-
-#runCmd(r'bp rpcrt4!Invoke')
-#runCmd(r'bp wininet!s_UrlCacheAddUrl')
-runCmd(r'bp wininet!CCacheContainer::AddUrl')
-runCmd(r'bp wininet!WxVerifySameDirectory')
-#runCmd(r'bp esent!ErrorIOMgrIssueIO')
-
-runCmdLog(r'bl', False)
+util.runCmdLog(r'bl', False)
 
 while True:
-    ret = runCmd(r'g')
-    if ttt_test2end(ret):
-        pyLog('='*10 + ' End ' + '='*10)
+    ret = util.runCmd(r'g')
+    if Util.ttt_test2end(ret):
+        pyLog.log2Scr('='*10 + ' End ' + '='*10)
         break
-    runCmd(r'.time')
-    #if test2Time('54C4AC0000046'): # Abnormal: Out of wininet!CommitUrlCacheEntryW
-    #if test2Time('CC79C000003A'): # Normal: Out of wininet!CommitUrlCacheEntryW
-    #    break
-    ret = runCmd(r'kP3')
-    pyLog(ret)
+    util.runCmd(r'.time')
     
-    LOG_FILE.flush()
+    ret = util.runCmd(r'kP3')
+    pyLog.log(ret)
+    
+    pyLog.flush()
 
 '''
 #bpList = [r'bp rpcrt4!Invoke', 'bp wininet!s_UrlCacheAddUrl', r'bp wininet!CCacheContainer::AddUrl', r'bp esent!ErrorIOMgrIssueIO']
@@ -73,4 +70,4 @@ for bpStr in bpList:
 
 '''
 
-LOG_FILE.close()
+pyLog.close()
