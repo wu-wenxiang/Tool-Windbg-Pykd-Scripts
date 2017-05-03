@@ -1,31 +1,30 @@
-'''
-Utils: 0.0.3
-'''
-
 import pykd
 import re
-from common_utils import *
+from common.v_0_0_3.common_utils import *
 
 print('='*10 + ' Start ' + '='*10)
-runCmd(r'bc *;g;g-')
+runCmd(r'bc *;g')
 
 #runCmd(r'!idna.tt 4159E80000018') # Abnormal:ieframe!CDownloadWindowItem::_SetState
 #runCmd(r'!idna.tt 54BF700000644') # Abnormal:wininet!CommitUrlCacheEntryW
 #runCmd(r'!idna.tt CC66400005FC') # Normal: wininet!CommitUrlCacheEntryW
+
 runCmd(r'bp ieframe!CDownloadSecurity::_SendSecurityErrorMessage')
 runCmd(r'bp ieframe!CDownloadWindowItem::_SetState')
 runCmd(r'bp ieframe!CNotificationBar2::SetFormattedText')
 runCmd(r'bp wininet!CommitUrlCacheEntryW')
 runCmd(r'bp wininet!CCacheServerContainer::AddUrl')
 runCmd(r'bp wininet!CCacheClientContainer::AddUrl')
-runCmd(r'bp rpcrt4!LRPC_BASE_CCALL::SendReceive')
 
-runCmd(r'bp ntdll!ZwAlpcSendWaitReceivePort')
+#runCmd(r'bp rpcrt4!LRPC_BASE_CCALL::SendReceive') # Detail * 0.5
+#runCmd(r'bp ntdll!ZwAlpcSendWaitReceivePort')     # Detail * 0.5
 
 #runCmd(r'bp rpcrt4!NdrClientCall3')        # Detail
 #runCmd(r'bp rpcrt4!NdrpClientCall3')       # Detail
 #runCmd(r'bp rpcrt4!Ndr64pClientUnMarshal') # Detail
 #runCmd(r'bp ntdll!memcpy')                 # Detail *2
+
+runCmd(r'bd *;g-;be *')
 
 runCmdLog(r'bl', False)
 

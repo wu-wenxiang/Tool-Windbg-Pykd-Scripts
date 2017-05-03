@@ -1,15 +1,11 @@
-'''
-Utils: 0.1.1
-'''
-
 import pykd
 import re
-from common_utils import *
+from common.v_0_1_1.common_utils import *
     
 pyLog = PyLog(r'C:\local\tmp\TTT-taskhost-get-addUrl.txt')
 util = Util(pyLog)
 pyLog.log2Scr('='*10 + ' Start ' + '='*10)
-util.runCmd(r'bc *;g;g-')
+util.runCmd(r'bc *;g')
 
 #util.runCmd(r'bp rpcrt4!Invoke')
 #util.runCmd(r'bp wininet!s_UrlCacheAddUrl')
@@ -17,8 +13,12 @@ util.runCmd(r'bp wininet!CCacheContainer::AddUrl')
 util.runCmd(r'bp wininet!WxVerifySameDirectory')
 #util.runCmd(r'bp esent!ErrorIOMgrIssueIO')
 
+util.runCmd(r'bd *;g-;be *')
+
+
 util.runCmdLog(r'bl', False)
 
+'''
 while True:
     ret = util.runCmd(r'g')
     if Util.ttt_test2end(ret):
@@ -30,30 +30,32 @@ while True:
     pyLog.log(ret)
     
     pyLog.flush()
-
 '''
+
+
 #bpList = [r'bp rpcrt4!Invoke', 'bp wininet!s_UrlCacheAddUrl', r'bp wininet!CCacheContainer::AddUrl', r'bp esent!ErrorIOMgrIssueIO']
 bpList = [r'bp wininet!CCacheContainer::AddUrl']
 for bpStr in bpList:
-    runCmd(r'bc *;g;g-')
-    runCmd(bpStr)
-    runCmdLog(r'bl', False)
+    util.runCmd(r'bc *;g;g-')
+    util.runCmd(bpStr)
+    util.runCmdLog(r'bl', False)
     while True:
-        ret = runCmd(r'g')
-        if ttt_test2end(ret):
-            pyLog('='*10 + ' End ' + '='*10)
+        ret = util.runCmd(r'g')
+        if Util.ttt_test2end(ret):
+            pyLog.log('='*10 + ' End ' + '='*10)
             break
-        runCmd(r'.time')
-        runCmdLog(r'kL3', False)
+        util.runCmd(r'.time')
+        util.runCmdLog(r'kL3', False)
         
-        runCmd(r'bd *;pt')
-        ret = runCmd(r'r')
-        pyLog(ret)
+        util.runCmd(r'bd *;pt')
+        ret = util.runCmd(r'r')
+        pyLog.log(ret)
         
-        LOG_FILE.flush()
+        pyLog.flush()
 
-        runCmd(r'be *')
+        util.runCmd(r'be *')
 
+'''
   2 Time Travel Position: 258A40000268
  41 Time Travel Position: 258A4000029D 
  80 Time Travel Position: 258A40000740
@@ -69,5 +71,5 @@ for bpStr in bpList:
  28 Time Travel Position: 73F3400000A3
 
 '''
-
 pyLog.close()
+
