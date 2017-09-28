@@ -18,6 +18,7 @@ pyLog.flush()
 
 reSegmentAt = re.compile(r'^\s*Segment at')
 
+heapSize = 0
 for addr in addrList:
     pyLog.log('='*20 + addr + '='*20)
     pyLog.flush()
@@ -26,6 +27,9 @@ for addr in addrList:
     segList = [line.split() for line in ret.split('\n') if reSegmentAt.search(line)]
     segList = [(i[2], i[4]) for i in segList]
     pyLog.log(segList)
+    tmpHeapSize = sum([int(j, 16)-int(i,16) for i,j in segList])/1024.0/1024.0
+    pyLog.log('HeapSize = %.2f M' % tmpHeapSize)
+    heapSize += tmpHeapSize
     pyLog.flush()
 
     for i, j in segList:
@@ -35,5 +39,7 @@ for addr in addrList:
         for line in ret.split('\n'):
             pyLog.log2File(line)
     pyLog.flush()
+
+pyLog.log('Heap Size = %.2f M' % heapSize)
 
 pyLog.close()
