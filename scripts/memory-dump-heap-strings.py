@@ -11,8 +11,8 @@ pyLog.log(ret)
 pyLog.flush()
 
 
-reCmp = re.compile(r'^\s+([0-9a-fA-F]+)\s+NT\s+Heap\s*$')
-addrList = [reCmp.search(line).groups()[0] for line in ret.split('\n') if reCmp.search(line)]
+reCmp = re.compile(r'^(\s*\d+:)?\s+([0-9a-fA-F]+)\s+')
+addrList = [reCmp.search(line).groups()[1] for line in ret.split('\n') if reCmp.search(line)]
 pyLog.log(addrList)
 pyLog.flush()
 

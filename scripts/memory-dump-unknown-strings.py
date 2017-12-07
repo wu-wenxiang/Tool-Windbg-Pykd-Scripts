@@ -10,13 +10,15 @@ ret = util.runCmd(r'!mex.grep MEM_COMMIT !address /f:Unk')
 #pyLog.log(ret)
 #pyLog.flush()
 
-reCmp = re.compile(r'^\s+0\D([0-9a-fA-F]+)\s+0\D([0-9a-fA-F]+)\s+0\D([0-9a-fA-F]+)\s+')
+reCmp = re.compile(r'^\s+(0\D)?([0-9a-fA-F]+)\s+(0\D)?([0-9a-fA-F]+)\s+(0\D)?([0-9a-fA-F]+)\s+')
 addrList = [reCmp.search(line).groups() for line in ret.split('\n') if reCmp.search(line)]
-unkSize = sum([int(i[2], 16) for i in addrList])/1024.0/1024.0
+unkSize = sum([int(i[5], 16) for i in addrList])/1024.0/1024.0
 pyLog.log('Unknown Size = %.2f M' % unkSize)
+pyLog.log(addrList)
 pyLog.flush()
 
-for addrStart, addrEnd, _len in addrList:
+addrList = [(i[1], i[3]) for i in addrList]
+for addrStart, addrEnd in addrList:
     ret = util.runCmd(r'!mex.strings %s %s' % (addrStart, addrEnd))
     if not ret:
         continue
