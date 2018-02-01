@@ -6,7 +6,7 @@ from common.v_0_1_1.common_utils import *
 postfix = ""
 if len(sys.argv) > 1:
     postfix = "-%s" % sys.argv[1]
-pyLog = PyLog(r'C:\local\tmp\memory-find-fragment%s.txt' % postfix)
+pyLog = PyLog(r'C:\local\tmp\TTT-fragment-bp-go%s.txt' % postfix)
 util = Util(pyLog)
 pyLog.log2Scr('='*10 + ' Start ' + '='*10)
 
