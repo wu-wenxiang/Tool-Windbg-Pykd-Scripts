@@ -14,6 +14,8 @@ util.runCmd(r'bc *;g-')
 fragmentDict = {line.split()[0]:line.split() for line in open(r'C:\Users\wenw\Desktop\dump&TTT\fragment-diff-2.txt') if line}
 for i in fragmentDict:
     util.runCmd(r'ba w4 %s' % i)
+    util.runCmd(r'ba w4 %s' % fragmentDict[i][1])
+    util.runCmd(r'ba w4 %s' % fragmentDict[i][-2])
     
 ret = util.runCmd(r'bl')
 for i in ret.split('\n'):
@@ -37,9 +39,17 @@ while True:
         fragmentAddress = bpDict[bpNum]
         if fragmentAddress not in fragmentDict:
             fragmentAddress = fragmentAddress.lstrip('0')
-        freeStart = fragmentDict[fragmentAddress][-2]
-        freeEnd = fragmentDict[fragmentAddress][-1]
-        util.runCmdLog(r'dc %s;dc %s;dc %s' % (freeStart, fragmentAddress, freeEnd))
+        if fragmentAddress in fragmentDict:
+            freeStart = fragmentDict[fragmentAddress][-2]
+            freeEnd = fragmentDict[fragmentAddress][1]
+            util.runCmdLog(r'dc %s;dc %s;dc %s' % (freeStart, fragmentAddress, freeEnd))
+        else:
+            for i,j in fragmentDict.items():
+                if (fragmentAddress in j[1]) or (fragmentAddress in j[-2]):
+                    freeStart = fragmentDict[i][-2]
+                    freeEnd = fragmentDict[i][1]
+                    util.runCmdLog(r'dc %s;dc %s;dc %s' % (freeStart, fragmentAddress, freeEnd))
+                    break
         
     if Util.ttt_test2end(ret):
         pyLog.log2Scr('='*10 + ' End ' + '='*10)

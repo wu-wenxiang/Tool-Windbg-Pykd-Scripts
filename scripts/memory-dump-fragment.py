@@ -11,7 +11,7 @@ util = Util(pyLog)
 pyLog.log2Scr('='*10 + ' Start ' + '='*10)
 
 fragmentDict = {line.split()[0]:line.split() for line in open(r'C:\Users\wenw\Desktop\dump&TTT\fragment-diff-2.txt') if line}
-for i in fragmentDict:
-    util.runCmdLog(r'dc %s;dc %s;dc %s' % (fragmentDict[i][-2], i, fragmentDict[i][-1]))
+for i in sorted(fragmentDict, key=lambda x:int(x, 16)):
+    util.runCmdLog(r'dc %s;dc %s;dc %s' % (fragmentDict[i][-2], i, fragmentDict[i][1]))
 
 pyLog.close()
