@@ -2,6 +2,17 @@ from pykd import *
 import re
 import sys
 import pickle
+import pykd
+from common.v_0_1_1.common_utils import *
+
+postfix = ""
+if len(sys.argv) > 1:
+    postfix = "-%s" % sys.argv[1]
+pyLog = PyLog(r'C:\local\tmp\memory-dump-heap-objects%s.txt' % postfix)
+util = Util(pyLog)
+pyLog.log2Scr('='*10 + ' Start ' + '='*10)
+
+#util.runCmd(r'bc *;g-')
 
 # TODO list:
 #	1) better parameter parsing and validation

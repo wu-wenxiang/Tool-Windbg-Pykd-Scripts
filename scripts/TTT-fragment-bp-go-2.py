@@ -14,6 +14,9 @@ util.runCmd(r'bc *;g-')
 #for i in fragmentDict:
 #    util.runCmd(r'ba w4 %s' % i)
 #dc 3f605000;dc 3f610000;dc 3f615000
+
+util.runCmdLog(r'dc 417a5000;dc 417b0000;dc 417b1000')
+
 util.runCmd(r'ba w4 417a5000')
 util.runCmd(r'ba w4 417b0000')
 util.runCmd(r'ba w4 417b1000')
@@ -40,7 +43,9 @@ while True:
         if reSearch:
             bpNum = int(reSearch.groups()[0])
             break
-    util.runCmdLog(r'dc 417a5000;dc 417b0000;dc 417b1000;p;kL;kP;dc 417a5000;dc 417b0000;dc 417b1000')
+    util.runCmdLog(r'dc 417a5000;dc 417b0000;dc 417b1000')
+    util.runCmdLog(r'p;kL;kP')
+    util.runCmdLog(r'dc 417a5000;dc 417b0000;dc 417b1000')
         
     pyLog.flush()
 
