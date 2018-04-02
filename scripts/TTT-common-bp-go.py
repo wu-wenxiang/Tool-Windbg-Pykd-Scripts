@@ -1,7 +1,7 @@
 import pykd
 import re
 
-LOG_FILE = open(r'C:\local\tmp\ttt-common-bp-go-2.txt', 'w')
+LOG_FILE = open(r'C:\local\tmp\ttt-common-bp-go.txt', 'w')
 
 def pykdLog2File(logObj, fileObj):
     for line in str(logObj).split('\n'):

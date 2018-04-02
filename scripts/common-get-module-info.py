@@ -13,9 +13,9 @@ for line in aList:
     aFile.write(cmd+'\n')
     tmpRet = pykd.dbgCommand(cmd)
     for i in tmpRet.split('\n'):
-        if 'CompanyName:' in i or 'Timestamp:' in i:
-            print(i)
-        aFile.write(i+'\n')
+        #if 'CompanyName:' in i or 'Timestamp:' in i:
+        #    print(i)
+        aFile.write(i.encode('utf-8')+'\n')
     aFile.flush()
 
 aFile.close()
