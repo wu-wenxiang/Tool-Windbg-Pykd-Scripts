@@ -6,16 +6,16 @@ from common.v_0_1_1.common_utils import *
 postfix = ""
 if len(sys.argv) > 1:
     postfix = "-%s" % sys.argv[1]
-pyLog = PyLog(r'C:\local\tmp\TTT-fragment-bp-go%s.txt' % postfix)
+pyLog = PyLog(r'C:\local\tmp\TTT-fragment-bp-go%s-2.txt' % postfix)
 util = Util(pyLog)
 pyLog.log2Scr('='*10 + ' Start ' + '='*10)
 
 util.runCmd(r'bc *;g-')
-fragmentDict = {line.split()[0]:line.split() for line in open(r'C:\Users\wenw\Desktop\dump&TTT\fragment-diff-2.txt') if line}
+fragmentDict = {line.split()[0]:line.split() for line in open(r'C:\local\tmp\fragment-diff.txt') if '<unknown>' in line or 'Free' in line}
 for i in fragmentDict:
     util.runCmd(r'ba w4 %s' % i)
-    util.runCmd(r'ba w4 %s' % fragmentDict[i][1])
-    util.runCmd(r'ba w4 %s' % fragmentDict[i][-2])
+    #util.runCmd(r'ba w4 %s' % fragmentDict[i][1])
+    #util.runCmd(r'ba w4 %s' % fragmentDict[i][-2])
     
 ret = util.runCmd(r'bl')
 for i in ret.split('\n'):
@@ -40,9 +40,10 @@ while True:
         if fragmentAddress not in fragmentDict:
             fragmentAddress = fragmentAddress.lstrip('0')
         if fragmentAddress in fragmentDict:
-            freeStart = fragmentDict[fragmentAddress][-2]
-            freeEnd = fragmentDict[fragmentAddress][1]
-            util.runCmdLog(r'dc %s;dc %s;dc %s' % (freeStart, fragmentAddress, freeEnd))
+            #freeStart = fragmentDict[fragmentAddress][-2]
+            #freeEnd = fragmentDict[fragmentAddress][1]
+            #util.runCmdLog(r'dc %s;dc %s;dc %s' % (freeStart, fragmentAddress, freeEnd))
+            util.runCmdLog(r'dc %s' % fragmentAddress)
         else:
             for i,j in fragmentDict.items():
                 if (fragmentAddress in j[1]) or (fragmentAddress in j[-2]):

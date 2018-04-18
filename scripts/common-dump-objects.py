@@ -6,16 +6,17 @@ from common.v_0_1_1.common_utils import *
 postfix = ""
 if len(sys.argv) > 1:
     postfix = "-%s" % sys.argv[1]
-pyLog = PyLog(r'C:\local\tmp\memory-find-fragment%s.txt' % postfix)
+pyLog = PyLog(r'C:\local\tmp\common-dump-objects%s.txt' % postfix)
 util = Util(pyLog)
 pyLog.log2Scr('='*10 + ' Start ' + '='*10)
 
-ret = util.runCmd(r'!address')
-#pyLog.log(ret)
-#pyLog.flush()
+ret = util.runCmd(r'!sos.DumpHeap /d -mt 00007ffd61879bc0')
+pyLog.log(ret)
+pyLog.flush()
+
 
 aList = []
-reCmp = re.compile(r'^\+?\s+([0-9A-Fa-f]+)\s+([0-9A-Fa-f]+)\s+([0-9A-Fa-f]+)\s+(MEM_[A-Z]+\s+)?(MEM_[A-Z]+\s+)?(PAGE_[A-Z]+\s+)?(\S+)\s*(.+)\s*$')
+reCmp = re.compile(r'^([0-9a-fA-F]{16})\s+[0-9a-fA-F]{16}\s+[0-9a-fA-F]+\s*$')
 for line in ret.split('\n'):
     reSearch = reCmp.search(line)
     if reSearch:
@@ -25,6 +26,9 @@ for line in ret.split('\n'):
         pyLog.log(tmpList)
 pyLog.flush()
 
+for i in aList:
+    util.runCmd(r'!mex.do2 %s' % i[0])
+'''
 # Check integrated
 startList = [i[0] for i in aList][1:]
 endList = [i[1] for i in aList][:-1]
@@ -52,5 +56,7 @@ for i in bList:
     pyLog.log(i)
 pyLog.log('\n'+'='*10+'\n')
 pyLog.log('length = %s' % len(bList))
+
+'''
 
 pyLog.close()
