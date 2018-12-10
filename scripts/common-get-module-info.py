@@ -15,7 +15,7 @@ for line in aList:
     for i in tmpRet.split('\n'):
         #if 'CompanyName:' in i or 'Timestamp:' in i:
         #    print(i)
-        aFile.write(i.encode('utf-8')+'\n')
+        aFile.write(i+'\n')
     aFile.flush()
 
 aFile.close()
